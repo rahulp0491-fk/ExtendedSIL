@@ -1,0 +1,4 @@
+Author: Rahul P
+
+Description: A compiler for Simple Integer Language using YACC and LEX. The intermedediate code generated is simulated with SIM.
+
