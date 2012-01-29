@@ -1,7 +1,9 @@
+/* LEX FILE */
+
 %{
+
 #include <stdlib.h>
 #include <string.h>
-
 #include "y.tab.h"
 
 void yyerror(char *);
@@ -13,15 +15,14 @@ struct node {
 	int relop;
 	int type;
 	char *s;
-	int nodetype; //read=1, write=2, arithop=3, num=4, id=5, eqop=6   unused node = -1
+	int nodetype;
 	struct node *left, *right, *mid;
 	struct symbol *lookup;
 };
+
 %}
 
 %%
-
-
 
 decl	{
 	return DECL;
@@ -129,7 +130,6 @@ read	{
 	yylval.nodeptr = malloc (sizeof(struct node));
 	yylval.nodeptr->left=NULL;
 	yylval.nodeptr->right=NULL;
-	//yylval.nodeptr->par=NULL;
 	yylval.nodeptr->nodetype = 1;
 	return READ;
 }
@@ -138,7 +138,6 @@ write	{
 	yylval.nodeptr = malloc (sizeof(struct node));
 	yylval.nodeptr->left=NULL;
 	yylval.nodeptr->right=NULL;
-	//yylval.nodeptr->par=NULL;
 	yylval.nodeptr->nodetype = 2;
 	return WRITE;
 }
@@ -167,7 +166,6 @@ main	{
 	yylval.nodeptr = malloc (sizeof(struct node));
 	yylval.nodeptr->left=NULL;
 	yylval.nodeptr->right=NULL;
-	//yylval.nodeptr->par=NULL;
 	yylval.nodeptr->nodetype = 40;
 	return MAIN;
 }
@@ -187,7 +185,6 @@ int {
 	yylval.nodeptr->nodetype = 5;
 	yylval.nodeptr->left=NULL;
 	yylval.nodeptr->right=NULL;
-	//yylval.nodeptr->par=NULL;
 	return ID;
 }
 
@@ -198,7 +195,6 @@ int {
 		yylval.nodeptr->type = 1;
 		yylval.nodeptr->left=NULL;
 		yylval.nodeptr->right=NULL;
-		//yylval.nodeptr->par=NULL;
 		return NUM;
 		}
 
@@ -208,7 +204,6 @@ int {
 		yylval.nodeptr->nodetype = 3;
 		yylval.nodeptr->left=NULL;
 		yylval.nodeptr->right=NULL;
-		//yylval.nodeptr->par=NULL;
 		return MOD;
 }
 
@@ -218,7 +213,6 @@ int {
 		yylval.nodeptr->nodetype = 3;
 		yylval.nodeptr->left=NULL;
 		yylval.nodeptr->right=NULL;
-		//yylval.nodeptr->par=NULL;
 		return PLUSOP;
 		}
 
@@ -228,7 +222,6 @@ int {
 		yylval.nodeptr->nodetype = 3;
 		yylval.nodeptr->left=NULL;
 		yylval.nodeptr->right=NULL;
-		//yylval.nodeptr->par=NULL;
 		return MINUSOP;
 		}
 
@@ -238,7 +231,6 @@ int {
 		yylval.nodeptr->nodetype = 3;
 		yylval.nodeptr->left=NULL;
 		yylval.nodeptr->right=NULL;
-		//yylval.nodeptr->par=NULL;
 		return MULTIOP;
 		}
 
@@ -248,7 +240,6 @@ int {
 		yylval.nodeptr->nodetype = 3;
 		yylval.nodeptr->left=NULL;
 		yylval.nodeptr->right=NULL;
-		//yylval.nodeptr->par=NULL;
 		return DIVIDEOP;
 		}
 
@@ -258,7 +249,6 @@ int {
 		yylval.nodeptr->nodetype = 6;
 		yylval.nodeptr->left=NULL;
 		yylval.nodeptr->right=NULL;
-		//yylval.nodeptr->par=NULL;
 		return EQOP;
 		}
 

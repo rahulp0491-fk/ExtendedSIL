@@ -1,3 +1,5 @@
+/* PARSER */
+
 %{
 #include <stdlib.h>
 #include <stdio.h>
@@ -6,6 +8,7 @@
 int yylex(void);
 void yyerror(char *);
 
+/* STRUCTURE FOR GLOBAL AND LOCAL SYMBOL TABLE */
 struct symbol {
 	char *name;
 	int type;
@@ -18,6 +21,7 @@ struct symbol {
 	
 }*ghead = NULL, *lhead = NULL;
 
+/* STRUCTURE FOR ARGUMENT LIST FOR FUNCTIONS AND LIST FOR TREE EXPRESSIONS IN TYPEDEF */
 struct arglist {
 	char *name;
 	int type;
@@ -26,6 +30,7 @@ struct arglist {
 	struct typetree *tdef;
 }*arghead, *hh;
 
+/* STRUCTURE FOR NODES OF THE ABSTRACT SYNTAX TREE */
 struct node {
 	int value;
 	int pos;
@@ -38,6 +43,7 @@ struct node {
 	struct symbol *lookup;
 };
 
+/* STRUCTURE FOR NODES OF THE TYPE EXPRESSIONS IN TYPEDEF */
 struct typetree {
 	char *name;
 	int size;
@@ -47,6 +53,7 @@ struct typetree {
 	struct typetree *next;
 }*thead=NULL;
 
+/* GLOBAL VARIABLES */
 int t;
 int v=1;
 int returnmem = 4000;
@@ -69,7 +76,7 @@ int fcount = 0;
 struct typetree *temp=NULL;
 struct typetree *ndef = NULL;
 
-
+/* FUNCTIONS USED */
 void insert_sym (struct symbol *);
 struct symbol * search_sym (char *, int);
 struct arglist * search_arg (char *);
@@ -91,6 +98,7 @@ struct typetree * search_tree(char *);
 %left MULTIOP DIVIDEOP
 
 %%
+/* GRAMMER RULES */
 
 program:	typedefs declaration body  {
 		$$ = malloc(sizeof(struct node));
@@ -916,15 +924,7 @@ void yyerror(char *s)
 	printf("%s\n", s);
 	}
 
-int tdisplay (){
-	struct typetree *t;
-	t = thead;
-	while (t!=NULL) {
-		t=t->next;
-	}
-}
-
-
+/* INSERT INTO TYPE EXPRESSION */
 void insert_tree (struct typetree *temp2) {
 	struct typetree *t;
 	if (thead == NULL){
@@ -938,6 +938,7 @@ void insert_tree (struct typetree *temp2) {
 	}
 }
 
+/* INSERT INTO SYMBOL TABLE */
 void insert_sym (struct symbol *t) {
 	struct symbol *s, *h;
 	if (g == 0)
@@ -958,6 +959,7 @@ void insert_sym (struct symbol *t) {
 	}
 }
 
+/* DISPLAY GLOBAL AND LOCAL SYMBOL TABLE -- USED FOR DEBUGGING AT VARIOUS POINTS */
 int display (int t) {
 	struct symbol *s;
 	if (t == 1)
@@ -981,6 +983,7 @@ int display (int t) {
 	}
 }
 
+/* SEARCH IN SYMBOL TABLES */
 struct symbol * search_sym (char *str, int s) {
 	struct symbol *t;
 	if (s == 1)
@@ -996,6 +999,7 @@ struct symbol * search_sym (char *str, int s) {
 	return t;
 }
 
+/* SEARCH IN ARGUMENT LIST */
 struct arglist * search_arg ( char *str) {
 	struct arglist *s;
 	s = hh;
@@ -1008,6 +1012,7 @@ struct arglist * search_arg ( char *str) {
 	return s;
 }
 
+/* SEARCH IN TYPE EXPRESSION */
 struct typetree * search_tree (char *str) {
 	struct typetree *s;
 	s = thead;
@@ -1020,6 +1025,7 @@ struct typetree * search_tree (char *str) {
 	return s;
 }
 
+/* TRAVERSE THE AST AND GENERATE THE SIM ASSEMBLY CODE */
 int evaluate(struct node *e) {
 	int l1, l2;
 	int a,t,b, s;
@@ -1277,7 +1283,7 @@ int evaluate(struct node *e) {
 	}
 }
 
-
+/* GENERATE CODE FOR ARITHMETIC AND BOOLEAN EXPRESSION LIKE STATEMENTS*/
 int calculate(struct node *e) {
 				int x, y,i,a,t;
 				switch(e->nodetype) {
@@ -1477,10 +1483,6 @@ int calculate(struct node *e) {
 						printf("GT R%d R%d\n", x, reg);
 						reg = x;
 						break;
-						
-						/*case 19:
-						printf("GT ");
-						break;*/
 					}
 					break;
 					
@@ -1491,6 +1493,7 @@ int calculate(struct node *e) {
 			return reg++;
 }
 
+/* MAIN -- INIT */
 int main(void) {
 	yyparse();
 	return 0;
