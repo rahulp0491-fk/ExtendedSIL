@@ -1,0 +1,20 @@
+decl
+	int a, b, f(int a);
+enddecl
+
+int f(int a) {
+	decl
+	enddecl
+	begin
+	return (a+3);
+	end
+}
+int main() {
+	decl
+	int c;
+	enddecl
+	begin
+	c = 3;
+	write(f(c));
+	end
+}

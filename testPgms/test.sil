@@ -1,0 +1,37 @@
+typedef n1 {
+	int a1;
+	int b1;
+}
+
+typedef n2 {
+	int a2;
+	bool b2;
+	int a3;
+}
+
+decl
+	n1 c4;
+	n2 c2;
+	int f(int a);
+enddecl
+
+int f(int a) {
+	decl
+	enddecl
+	begin
+	return a;
+	end
+}
+
+int main() {
+	decl
+		n1 c1, c3;
+	enddecl
+	begin
+		c3.a1 = 3;
+		c3.b1 = c2.a2 + f(5);
+		c1 = c2;
+		write(c1.b1);
+	end
+}
+

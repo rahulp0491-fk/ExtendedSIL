@@ -1,0 +1,53 @@
+
+decl
+int a[7], b, f();
+enddecl
+int f() {
+
+decl
+	int i, j, k;
+enddecl
+
+begin
+	i=0;
+	k=0;
+
+	while (k<7) do {
+		read(a[k]);
+		k = k+1;
+	}endwhile;
+
+	while (i<7) do {
+		j=0;
+		while (j<6) do {
+			if (a[j] > a[j+1]) then {
+				b=a[j];
+				a[j]=a[j+1];
+				a[j+1]=b;
+				} endif;
+			j=j+1;
+			}endwhile;
+		i=i+1;
+		}endwhile;
+
+		i=0;
+
+		while (i<=6) do
+			{
+			write(a[i]);
+			i=i+1;
+			}endwhile;
+
+end
+}
+
+int main() {
+	decl
+		int c;
+	enddecl
+	begin 
+		c = f();
+	end
+}
+
+

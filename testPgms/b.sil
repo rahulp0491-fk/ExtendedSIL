@@ -1,0 +1,60 @@
+decl
+	int d[10], f(int g, int n), count;
+enddecl
+int f(int g, int n) {
+	decl
+		int a, b, k;
+	enddecl
+	begin
+		count = 0;
+		k=0;
+
+		while (k<10) do {
+			read(d[k]);
+			k = k+1;
+		}endwhile;
+		
+		
+			
+		i = 0;
+	
+		while (i!=n) do {
+			if (d[i] < d[i+1]) then {
+				count=count+1;
+				i = i+1;	
+			}endif;
+		}endwhile;
+		
+		if (count == 9) then {
+			return 1;
+		}endif;
+		
+		i=0;
+		while (i!=9) do {
+			if (d[i] > d[i+1]) then {
+				b=d[i];
+				d[i]=a[i+1];
+				d[i+1]=b;	
+			}endif;
+			i = i+1;	
+			f(d[i+1], n-1)
+		}endwhile;
+		
+		i=0;
+
+		while (i<=6) do
+			{
+			write(a[i]);
+			i=i+1;
+			}endwhile;
+}
+
+int main() {
+	decl
+		int c;
+	enddecl
+	begin
+		c=f(d[0],10);
+	end	
+		
+}

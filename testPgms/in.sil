@@ -1,0 +1,30 @@
+
+decl
+	int f(int d);
+enddecl
+
+int f(int d) {
+	decl
+		int a;
+	enddecl
+	begin
+		if(d>=90) then {
+			return 90;
+			}
+		else {
+			a=d+10;
+			return f(f(a));
+		}endif;
+	end
+}
+int main() {
+	decl
+		int x,y;
+	enddecl
+	begin
+		read(x);
+		y = f(x);
+		write(y);
+	end
+}
+
